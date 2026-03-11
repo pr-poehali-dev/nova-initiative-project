@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { useUIStore } from "@/lib/ui-store"
 import { OrbSlot } from "./OrbSlot"
 import { MiniAppAbout } from "./MiniAppAbout"
