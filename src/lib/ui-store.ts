@@ -1,7 +1,7 @@
 import { create } from "zustand"
 
 type Persona = "assistant" | "alex"
-type AppType = "about" | "resume" | "writings" | "art" | null
+type AppType = "about" | "test" | "exercises" | "guide" | null
 
 interface UIState {
   persona: Persona

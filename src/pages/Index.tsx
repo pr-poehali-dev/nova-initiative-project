@@ -6,9 +6,7 @@ import { OSOverlay } from "@/components/OSOverlay"
 export default function HomePage() {
   return (
     <>
-      {/* Landing Page - Fixed height, no scroll */}
       <div className="h-screen bg-[#FAFAFA] flex flex-col items-center justify-center p-8 relative overflow-hidden">
-        {/* Neo-brutal grid background */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -20,7 +18,6 @@ export default function HomePage() {
           }}
         />
 
-        {/* Subtle grain texture */}
         <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
@@ -29,13 +26,12 @@ export default function HomePage() {
         />
 
         <div className="relative z-10 flex flex-col items-center justify-center flex-1 max-w-lg w-full">
-          {/* AI Robot */}
           <div className="flex flex-col items-center space-y-4 mb-8">
             <AnimatedRobot />
-            <h1 className="text-4xl font-black text-center">Привет.</h1>
+            <h1 className="text-4xl font-black text-center">Ты достаточно хорош.</h1>
+            <p className="text-center text-gray-500 text-sm font-medium">Инструмент для работы с синдромом самозванца</p>
           </div>
 
-          {/* Chat Panel */}
           <ChatPanel />
         </div>
 
@@ -44,7 +40,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* OS Overlay */}
       <OSOverlay />
     </>
   )

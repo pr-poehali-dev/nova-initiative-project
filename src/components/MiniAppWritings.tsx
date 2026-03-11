@@ -1,48 +1,146 @@
+import { useState } from "react"
+
+const EXERCISES = [
+  {
+    id: 1,
+    title: "Дневник достижений",
+    tag: "Рефлексия",
+    duration: "10 мин / день",
+    description:
+      "Каждый вечер записывайте 3 вещи, которые вам удались сегодня. Не важно, большие они или маленькие. Цель — приучить мозг замечать собственный вклад в результат.",
+    steps: [
+      "Возьмите блокнот или откройте заметки на телефоне",
+      "Запишите: «Сегодня мне удалось...» и продолжите 3 раза",
+      "Рядом с каждым достижением укажите, какой ваш навык или усилие помогло",
+      "Перечитайте записи за неделю в воскресенье",
+    ],
+  },
+  {
+    id: 2,
+    title: "Письмо другу",
+    tag: "Самосострадание",
+    duration: "15–20 мин",
+    description:
+      "Напишите письмо другу, который испытывает те же сомнения в себе, что и вы. Что бы вы ему сказали? Этот метод помогает активировать сострадание к себе.",
+    steps: [
+      "Представьте близкого друга с такими же сомнениями как у вас",
+      "Напишите ему письмо: поддержите, объясните, почему его сомнения неоправданны",
+      "Перечитайте письмо — но уже обращаясь к себе",
+      "Сохраните письмо и возвращайтесь к нему в моменты неуверенности",
+    ],
+  },
+  {
+    id: 3,
+    title: "Карта компетенций",
+    tag: "Осознанность",
+    duration: "30 мин",
+    description:
+      "Визуализируйте свои реальные знания и навыки. Это упражнение помогает увидеть объективную картину своих компетенций вместо искажённого «я ничего не знаю».",
+    steps: [
+      "Нарисуйте в центре листа своё имя",
+      "Вокруг напишите все сферы, в которых вы работаете или учитесь",
+      "К каждой сфере добавьте конкретные знания, навыки и опыт",
+      "Обведите то, чему вы научились сами — это ваш реальный вклад",
+    ],
+  },
+  {
+    id: 4,
+    title: "Техника «Адвокат защиты»",
+    tag: "Когнитивная работа",
+    duration: "20 мин",
+    description:
+      "Когда внутренний критик нападает, включите «адвоката». Эта техника учит оспаривать автоматические негативные мысли с помощью фактов и логики.",
+    steps: [
+      "Запишите мысль самозванца: «Мне просто повезло, я не заслуживаю этого»",
+      "Выступите адвокатом: найдите 5 доказательств обратного",
+      "Ответьте на вопрос: «Что бы подумал об этом объективный наблюдатель?»",
+      "Запишите итоговый «приговор» — более взвешенную версию мысли",
+    ],
+  },
+  {
+    id: 5,
+    title: "Ретроспектива успеха",
+    tag: "Рефлексия",
+    duration: "45 мин",
+    description:
+      "Раз в месяц проводите личную ретроспективу — анализ прошедшего периода с фокусом на вашем вкладе в результаты.",
+    steps: [
+      "Выберите 3 значимых события или результата за последний месяц",
+      "Для каждого опишите: какие ваши действия привели к этому результату",
+      "Выделите навыки и качества, которые вы использовали",
+      "Составьте список того, чем вы можете гордиться",
+    ],
+  },
+  {
+    id: 6,
+    title: "Круг поддержки",
+    tag: "Социальная поддержка",
+    duration: "Онгоинг",
+    description:
+      "Создайте осознанный круг людей, которые видят ваши реальные способности. Их обратная связь становится противовесом внутреннему критику.",
+    steps: [
+      "Выберите 3–5 людей, которым доверяете и которые вас хорошо знают",
+      "Попросите их честно рассказать о ваших сильных сторонах",
+      "Запишите их слова и возвращайтесь к ним в моменты сомнений",
+      "Регулярно делитесь с ними своими достижениями — не бойтесь говорить о успехах",
+    ],
+  },
+]
+
 export function MiniAppWritings() {
-  const posts = [
-    {
-      title: "Будущее креативного AI",
-      date: "Дек 2024",
-      excerpt:
-        "Как искусственный интеллект меняет креативную индустрию и что это значит для художников и дизайнеров.",
-    },
-    {
-      title: "Создаем дизайн-системы правильно",
-      date: "Ноя 2024",
-      excerpt: "Уроки из опыта создания масштабируемых дизайн-систем, которые реально работают для команд разработки.",
-    },
-    {
-      title: "Искусство кода",
-      date: "Окт 2024",
-      excerpt: "Почему программирование — это творческое занятие и как писать код как форму художественного самовыражения.",
-    },
-  ]
+  const [openId, setOpenId] = useState<number | null>(null)
 
   return (
     <div className="max-w-2xl">
-      <h2 className="text-4xl font-black mb-6 border-b-[3px] border-black pb-2">Статьи</h2>
+      <h2 className="text-4xl font-black mb-2 border-b-[3px] border-black pb-2">Комплекс упражнений</h2>
+      <p className="text-gray-600 mb-6 font-medium">
+        Практические техники для формирования конструктивных рефлексивных навыков. Нажмите на упражнение, чтобы раскрыть пошаговую инструкцию.
+      </p>
 
       <div className="space-y-4">
-        {posts.map((post, i) => (
+        {EXERCISES.map((ex) => (
           <article
-            key={i}
-            className="bg-white p-6 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
+            key={ex.id}
+            className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
           >
-            <div className="flex justify-between items-start mb-3">
-              <h3 className="text-xl font-black">{post.title}</h3>
-              <span className="text-sm font-bold bg-[#FF2E63] text-white px-2 py-1 border-[2px] border-black">
-                {post.date}
-              </span>
-            </div>
-            <p className="text-gray-700 leading-relaxed">{post.excerpt}</p>
+            <button
+              className="w-full p-5 text-left"
+              onClick={() => setOpenId(openId === ex.id ? null : ex.id)}
+            >
+              <div className="flex justify-between items-start gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-1 flex-wrap">
+                    <h3 className="text-xl font-black">{ex.title}</h3>
+                    <span className="text-xs font-bold bg-[#FF2E63] text-white px-2 py-0.5 border-[2px] border-black">
+                      {ex.tag}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-500 font-medium">⏱ {ex.duration}</p>
+                </div>
+                <span className="text-2xl font-black text-[#FF2E63] shrink-0">
+                  {openId === ex.id ? "−" : "+"}
+                </span>
+              </div>
+            </button>
+
+            {openId === ex.id && (
+              <div className="px-5 pb-5 border-t-[2px] border-black">
+                <p className="text-gray-700 leading-relaxed my-4">{ex.description}</p>
+                <h4 className="font-black mb-3">Пошаговая инструкция:</h4>
+                <ol className="space-y-2">
+                  {ex.steps.map((step, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="bg-[#FF2E63] text-white font-black text-sm w-6 h-6 flex items-center justify-center border-[2px] border-black shrink-0 mt-0.5">
+                        {i + 1}
+                      </span>
+                      <span className="leading-relaxed">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
           </article>
         ))}
-      </div>
-
-      <div className="mt-8 text-center">
-        <button className="bg-[#FF2E63] text-white px-6 py-3 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-black text-lg">
-          Все статьи
-        </button>
       </div>
     </div>
   )

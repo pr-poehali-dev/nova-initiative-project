@@ -1,39 +1,161 @@
+import { useState } from "react"
+
+const SECTIONS = [
+  {
+    id: "signs",
+    title: "Как распознать синдром самозванца у ребёнка",
+    color: "from-[#FF2E63] to-[#FF6B9D]",
+    content: [
+      {
+        point: "Избегание новых вызовов",
+        detail:
+          "Ребёнок отказывается пробовать новое из-за страха потерпеть неудачу. Говорит «у меня не получится» до того, как попробовал.",
+      },
+      {
+        point: "Преуменьшение достижений",
+        detail:
+          "После пятёрки говорит «просто повезло» или «задание было лёгким». Не радуется успехам или радуется лишь мимолётно.",
+      },
+      {
+        point: "Перфекционизм и прокрастинация",
+        detail:
+          "Долго не сдаёт работу, потому что «она недостаточно хороша». Тратит непропорционально много времени на «доработку».",
+      },
+      {
+        point: "Сравнение себя с другими",
+        detail:
+          "Постоянно сравнивает себя с одноклассниками и считает, что все умнее. Фокусируется на чужих успехах, игнорируя собственные.",
+      },
+    ],
+  },
+  {
+    id: "do",
+    title: "Что делать родителям",
+    color: "from-blue-400 to-indigo-500",
+    content: [
+      {
+        point: "Хвалите процесс, а не результат",
+        detail:
+          "Говорите не «ты молодец» (оценка личности), а «ты так старался и у тебя получилось» (оценка усилий). Это формирует установку на рост.",
+      },
+      {
+        point: "Обсуждайте ошибки как часть учёбы",
+        detail:
+          "Расскажите о своих ошибках и как вы с ними справились. Нормализуйте неудачу: «Ошибаться — это способ учиться, а не знак того, что ты плохой».",
+      },
+      {
+        point: "Ведите семейный дневник достижений",
+        detail:
+          "Вместе записывайте маленькие и большие победы каждого члена семьи. Перечитывайте их в моменты неуверенности.",
+      },
+      {
+        point: "Поощряйте говорить о чувствах",
+        detail:
+          "Создайте безопасное пространство, где ребёнок может сказать «я боюсь, что не справлюсь». Не обесценивайте этот страх — исследуйте его вместе.",
+      },
+    ],
+  },
+  {
+    id: "avoid",
+    title: "Чего избегать",
+    color: "from-orange-400 to-red-500",
+    content: [
+      {
+        point: "Не сравнивайте с другими детьми",
+        detail:
+          "Фраза «посмотри, как Маша хорошо учится» усиливает синдром самозванца. Сравнивайте ребёнка только с ним самим — вчерашним.",
+      },
+      {
+        point: "Избегайте условной любви",
+        detail:
+          "Ребёнок должен чувствовать, что вы любите его независимо от оценок и достижений. «Я тебя люблю, даже когда у тебя не получается».",
+      },
+      {
+        point: "Не давите на перфекционизм",
+        detail:
+          "«Почему не пятёрка?» разрушает уверенность. Лучше: «Что ты узнал нового?» или «Что ты сделал бы по-другому?».",
+      },
+      {
+        point: "Не преувеличивайте и не преуменьшайте",
+        detail:
+          "Избыточная похвала («ты гений!») так же вредна, как и критика — она создаёт страх «разочаровать». Будьте честны и конкретны.",
+      },
+    ],
+  },
+  {
+    id: "phrases",
+    title: "Полезные фразы для ежедневного использования",
+    color: "from-green-400 to-teal-500",
+    content: [
+      {
+        point: "Вместо «у тебя всё получится»",
+        detail: "Скажите: «Ты уже справлялся с трудными вещами раньше — помнишь, как ты научился...?»",
+      },
+      {
+        point: "Вместо «ты просто не стараешься»",
+        detail:
+          "Скажите: «Давай разберём вместе, что именно тяжело. Может быть, нужна другая стратегия?»",
+      },
+      {
+        point: "После неудачи",
+        detail:
+          "«Мне жаль, что так получилось. Что ты чувствуешь? Что мы можем сделать, чтобы в следующий раз было иначе?»",
+      },
+      {
+        point: "Регулярно спрашивайте",
+        detail:
+          "«Чем ты сегодня доволен?» — не «что ты сегодня сделал хорошо?» Это помогает ребёнку самому находить и присваивать свои достижения.",
+      },
+    ],
+  },
+]
+
 export function MiniAppArt() {
-  const artworks = [
-    { title: "Цифровые пейзажи", medium: "Генеративное искусство", year: "2024" },
-    { title: "Абстрактные композиции", medium: "p5.js", year: "2024" },
-    { title: "Интерактивные инсталляции", medium: "WebGL", year: "2023" },
-    { title: "Визуализация данных", medium: "D3.js", year: "2023" },
-    { title: "Алгоритмические паттерны", medium: "Processing", year: "2022" },
-    { title: "Нейросетевое искусство", medium: "AI Generated", year: "2022" },
-  ]
+  const [openSection, setOpenSection] = useState<string | null>("signs")
 
   return (
     <div className="max-w-4xl">
-      <h2 className="text-4xl font-black mb-6 border-b-[3px] border-black pb-2">Галерея</h2>
+      <h2 className="text-4xl font-black mb-2 border-b-[3px] border-black pb-2">Гайд для родителей</h2>
+      <p className="text-gray-600 mb-6 font-medium">
+        Методическое руководство: как помочь ребёнку преодолеть синдром самозванца
+      </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {artworks.map((artwork, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {SECTIONS.map((section) => (
           <div
-            key={i}
-            className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
+            key={section.id}
+            className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
           >
-            <div className="aspect-square bg-gradient-to-br from-[#FF2E63] to-[#FF6B9D] border-b-[3px] border-black flex items-center justify-center">
-              <span className="text-white font-black text-lg">АРТ</span>
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-black mb-1">{artwork.title}</h3>
-              <p className="text-sm text-gray-600 font-medium">{artwork.medium}</p>
-              <p className="text-sm font-bold">{artwork.year}</p>
-            </div>
+            <button
+              className="w-full text-left"
+              onClick={() => setOpenSection(openSection === section.id ? null : section.id)}
+            >
+              <div className={`aspect-[3/1] bg-gradient-to-br ${section.color} border-b-[3px] border-black flex items-center justify-center p-4`}>
+                <h3 className="text-lg font-black text-white text-center drop-shadow">{section.title}</h3>
+              </div>
+            </button>
+
+            {openSection === section.id && (
+              <div className="p-5 space-y-4">
+                {section.content.map((item, i) => (
+                  <div key={i} className="border-l-[4px] border-[#FF2E63] pl-4">
+                    <p className="font-black mb-1">{item.point}</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">{item.detail}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      <div className="mt-8 text-center">
-        <button className="bg-[#FF2E63] text-white px-6 py-3 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-black text-lg">
-          Полное портфолио
-        </button>
+      <div className="mt-8 bg-white p-6 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <h3 className="text-xl font-black mb-3">Помните главное</h3>
+        <p className="text-lg leading-relaxed text-gray-700">
+          Синдром самозванца формируется годами, и работа с ним — это марафон, а не спринт. Ваше спокойное, 
+          принимающее присутствие рядом с ребёнком важнее любых техник. Начните с себя: замечаете ли вы 
+          свои достижения? Как вы говорите о своих ошибках? Дети учатся на нашем примере.
+        </p>
       </div>
     </div>
   )
